@@ -1,7 +1,7 @@
-//YOU CAN PROBABLY DELETE USERS - PART OF THE EXPRESS DEFAULT SETUP
+//YOU CANNOT DELETE THIS FILE AS IT SUPPORTS THE INDEX FILE
 
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
