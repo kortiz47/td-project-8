@@ -3,9 +3,9 @@
 const {
   Model
 } = require('sequelize');
-const { Sequelize } = require('.');
 
-module.exports = (sequelize) => {
+
+module.exports = (sequelize, DataTypes) => {
   class Book extends Model {
     /**
      * Helper method for defining associations.
@@ -18,7 +18,7 @@ module.exports = (sequelize) => {
   }
   Book.init({
     title: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
       validate:{
         notNull: {
@@ -30,7 +30,7 @@ module.exports = (sequelize) => {
       }
     },
     author: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: {
@@ -41,8 +41,8 @@ module.exports = (sequelize) => {
         }
       }
     },
-    genre: Sequelize.STRING,
-    year: Sequelize.INTEGER
+    genre: DataTypes.STRING,
+    year: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Book',
