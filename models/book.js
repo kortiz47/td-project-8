@@ -3,7 +3,9 @@
 const {
   Model
 } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+const { Sequelize } = require('.');
+
+module.exports = (sequelize) => {
   class Book extends Model {
     /**
      * Helper method for defining associations.
@@ -15,10 +17,32 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Book.init({
-    title: DataTypes.STRING,
-    author: DataTypes.STRING,
-    genre: DataTypes.STRING,
-    year: DataTypes.INTEGER
+    title: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      validate:{
+        notNull: {
+          msg: "The 'title' input cannot be blank. Please add a title."
+        },
+        notEmpty: {
+          msg: "The 'title' input cannot be blank. Please add a title."
+        }
+      }
+    },
+    author: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "The 'author' input cannot be blank. Please add an author."
+        },
+        notEmpty: {
+          msg: "The 'author' input cannot be blank. Please add an author."
+        }
+      }
+    },
+    genre: Sequelize.STRING,
+    year: Sequelize.INTEGER
   }, {
     sequelize,
     modelName: 'Book',
