@@ -45,16 +45,21 @@ app.use((req, res, next)=>{
   const error = new Error();
   error.status = 404;
   error.message = '404 Error: The page you are looking for does not exist. Please try again.';
-  console.log(error);
+  //console.log(error);
   res.render('page-not-found', {error, title: 'Page Not Found'});  
 })
 
 //Global Error Handler
 app.use((err, req, res, next)=>{
-  err.status = 500;
-  err.message = '500 Error: Oh no! Something went wrong with our server. Please try again.';
-  console.log(err);
-  res.render('error', {err, title: 'Server Error'})
+  if(err.status === 404){
+    res.status(404).render('page-not-found', {err})
+  }else{
+    err.status = 500;
+    err.message = '500 Error: Oh no! Something went wrong with our server. Please try again.';
+    console.log({err});
+    res.render('error', {err, title: 'Server Error'})
+  }
+  
 })
 
 module.exports = app;
