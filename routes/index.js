@@ -3,27 +3,21 @@ const express = require('express');
 const router = express.Router();
 const Book = require("../models").Book;
 
-/* GET home page. Redirected to /books */
+//==================================ROUTES=====================================
 
-/** Home Route redirected to /books */
+/** Rendered Home Route redirected to /books */
 router.get('/', async(req, res)=>{
   const bookInstances = await Book.findAll();
   const booksJSON = bookInstances.map(book => book.toJSON());
   res.render('index', {books: booksJSON});
 });
 
-//==================================ROUTES=====================================
 
-/** Home Route */
-// router.get('/books', async (req, res)=>{
-//   const booksRaw = await Book.findAll();
-//   const books = JSON.stringify(booksRaw);
-//   res.render('index');
-// })
+/** Rendered New Book Form /books/new route */
 
-// router.get('/books/new', (req, res)=>{
-//   res.render('new-book');
-// })
+router.get('/new', (req, res)=>{
+  res.render('new-book');
+})
 
 // //should post a new book to the database
 // // router.post('/books/new', (req, res)=>{
