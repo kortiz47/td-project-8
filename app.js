@@ -37,6 +37,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+
+app.use((req, res, next)=>{
+  const error = new Error();
+  error.status = 404;
+  error.message = '404 Error: The page you are looking for does not exist. Please try again.';
+  res.render('page-not-found', {error, title: 'Page Not Found'});  
+})
 //app.use('/users', usersRouter);
 
 // // catch 404 and forward to error handler
