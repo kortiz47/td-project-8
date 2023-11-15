@@ -16,10 +16,33 @@ router.get('/', async(req, res, next)=>{
 });
 
 //Main page route /books
-// router.get('/books', (req, res)=>{
-//   res.render('index');
+router.get('/books', (req, res)=>{
+  res.render('index');
+})
+
+router.get('/books/new', (req, res)=>{
+  res.render('new-book');
+})
+
+//should post a new book to the database
+// router.post('/books/new', (req, res)=>{
+//   res.render('new-book');
 // })
 
+//Shows book detail form
+router.get('/books/:id', (req,res)=>{
+  res.render('update-book');
+})
+
+//Updates book info in the database
+// router.post('/books/:id', (req,res)=>{
+//   res.render('update-book');
+// })
+
+//Deletes a book. Be careful, this can’t be undone. It can be helpful to create a new “test” book to test deleting
+// router.post('/books/:id/delete', (req, res)=>{
+
+// })
 
 //Exports
 module.exports = router;

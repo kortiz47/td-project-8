@@ -38,10 +38,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 
-//Main page route /books
-app.get('/books', (req, res)=>{
-  res.render('index');
-})
+// //Main page route /books
+// app.get('/books', (req, res)=>{
+//   res.render('index');
+// })
 
 
 //===============================ERROR HANDLERS=================================
