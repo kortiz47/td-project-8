@@ -5,34 +5,35 @@ const Book = require("../models").Book;
 
 /* GET home page. Redirected to /books */
 
-/** need to fix the logging of error */
-router.get('/', async(req, res, next)=>{
-  const books = await Book.findAll();
-  //console.log(books);
-  res.json(books);
-  // const error = new Error();
-  // error.status = 500;
-  // next(error);
+/** Home Route redirected to /books */
+router.get('/', async(req, res)=>{
+  const bookInstances = await Book.findAll();
+  const booksJSON = bookInstances.map(book => book.toJSON());
+  res.render('index', {books: booksJSON});
 });
 
-//Main page route /books
-router.get('/books', (req, res)=>{
-  res.render('index');
-})
+//==================================ROUTES=====================================
 
-router.get('/books/new', (req, res)=>{
-  res.render('new-book');
-})
+/** Home Route */
+// router.get('/books', async (req, res)=>{
+//   const booksRaw = await Book.findAll();
+//   const books = JSON.stringify(booksRaw);
+//   res.render('index');
+// })
 
-//should post a new book to the database
-// router.post('/books/new', (req, res)=>{
+// router.get('/books/new', (req, res)=>{
 //   res.render('new-book');
 // })
 
-//Shows book detail form
-router.get('/books/:id', (req,res)=>{
-  res.render('update-book');
-})
+// //should post a new book to the database
+// // router.post('/books/new', (req, res)=>{
+// //   res.render('new-book');
+// // })
+
+// //Shows book detail form
+// router.get('/books/:id', (req,res)=>{
+//   res.render('update-book');
+// })
 
 //Updates book info in the database
 // router.post('/books/:id', (req,res)=>{

@@ -36,13 +36,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+app.get('/', (req, res)=>{
+  res.redirect('/books');
+});
 
-// //Main page route /books
-// app.get('/books', (req, res)=>{
-//   res.render('index');
-// })
-
+app.use('/books', indexRouter);
 
 //===============================ERROR HANDLERS=================================
 
