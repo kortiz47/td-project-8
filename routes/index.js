@@ -9,6 +9,7 @@ const Book = require("../models").Book;
 router.get('/', async(req, res)=>{
   const bookInstances = await Book.findAll();
   const booksJSON = bookInstances.map(book => book.toJSON());
+  console.log(booksJSON)
   res.render('index', {books: booksJSON});
 });
 
@@ -24,10 +25,10 @@ router.get('/new', (req, res)=>{
 // //   res.render('new-book');
 // // })
 
-// //Shows book detail form
-// router.get('/books/:id', (req,res)=>{
-//   res.render('update-book');
-// })
+/** Rendered Book Detail Page /books/:id  */
+router.get('/:id', (req,res)=>{
+  res.render('update-book');
+})
 
 //Updates book info in the database
 // router.post('/books/:id', (req,res)=>{
