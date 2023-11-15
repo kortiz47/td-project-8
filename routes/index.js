@@ -9,7 +9,6 @@ const Book = require("../models").Book;
 router.get('/', async(req, res)=>{
   const bookInstances = await Book.findAll();
   const booksJSON = bookInstances.map(book => book.toJSON());
-  console.log(booksJSON)
   res.render('index', {books: booksJSON});
 });
 
@@ -26,8 +25,18 @@ router.get('/new', (req, res)=>{
 // // })
 
 /** Rendered Book Detail Page /books/:id  */
-router.get('/:id', (req,res)=>{
-  res.render('update-book');
+router.get('/:id', async(req,res, next)=>{
+  const id = req.params.id;
+  const bookInstances = await Book.findAll();
+  if(id <= bookInstances.length){
+    res.render('update-book');
+  }else{
+    const error = new Error();
+    error.status = 404;
+    error.message = '404 Error: The book you are looking for does not exist';
+    next(error);
+  }
+  
 })
 
 //Updates book info in the database
