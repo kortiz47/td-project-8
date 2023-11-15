@@ -11,18 +11,5 @@ router.get('/', async(req, res)=>{
 });
 
 
-
-//===============================ERROR HANDLERS=================================
-
-//404 Error Handler - Page Not Found
-// router.use((req, res, next)=>{
-//   const error = new Error();
-//   error.status = 404;
-//   error.message = '404 Error: The page you are looking for does not exist. Please try again.';
-//   res.render('error', {error});  
-// })
-
-//Global Error Handler
-
 //Exports
 module.exports = router;

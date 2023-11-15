@@ -38,28 +38,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 
+//===============================ERROR HANDLERS=================================
+
+//404 Error Handler - Page Not Found
 app.use((req, res, next)=>{
   const error = new Error();
   error.status = 404;
   error.message = '404 Error: The page you are looking for does not exist. Please try again.';
+  console.log(error);
   res.render('page-not-found', {error, title: 'Page Not Found'});  
 })
-//app.use('/users', usersRouter);
 
-// // catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   next(createError(404));
-// });
-
-// // error handler
-// app.use(function(err, req, res, next) {
-//   // set locals, only providing error in development
-//   res.locals.message = err.message;
-//   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-//   // render the error page
-//   res.status(err.status || 500);
-//   res.render('error');
-// });
+//Global Error Handler
+app.use((err, req, res, next)=>{
+  err.status = 500;
+  err.message = '500 Error: Oh no! Something went wrong with our server. Please try again.';
+  console.log(err);
+  res.render('error', {err, title: 'Server Error'})
+})
 
 module.exports = app;
