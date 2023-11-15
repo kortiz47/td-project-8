@@ -16,9 +16,9 @@ router.get('/', async(req, res, next)=>{
 });
 
 //Main page route /books
-router.get('/books', (req, res)=>{
-  res.render('index');
-})
+// router.get('/books', (req, res)=>{
+//   res.render('index');
+// })
 
 
 //Exports
