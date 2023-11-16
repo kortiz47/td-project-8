@@ -83,10 +83,9 @@ router.post('/:id', asyncHandler(async(req,res)=>{
   }catch(error){
     if (error.name === 'SequelizeValidationError') {
       const errorMsgs = error.errors.map(error => error.message);
-      console.log(errorMsgs);
-      // const titleError = errorMsgs.includes("The 'title' input cannot be blank. Please add a title.");
-      // const authorError = errorMsgs.includes("The 'author' input cannot be blank. Please add an author.");
-      // res.redirect('update-book', {error: errorMsgs, titleErr: titleError, authorErr: authorError});
+      const titleError = errorMsgs.includes("The 'title' input cannot be blank. Please add a title.");
+      const authorError = errorMsgs.includes("The 'author' input cannot be blank. Please add an author.");
+      res.render('update-book-error', {error: errorMsgs, titleErr: titleError, authorErr: authorError, id});
     } else {
       throw error;
     }
