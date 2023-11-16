@@ -37,9 +37,9 @@ router.post('/new', asyncHandler(async (req, res) => {
   let book;
   try {
     console.log(req.body);
-    book = await Book.create(req.body);
-    console.log(book);
-    res.send('post request for new book');
+    //book = await Book.create(req.body);
+    //console.log(book);
+    res.redirect('/');
   } catch (error) {
     if (error.name === 'SequelizeValidationError') {
       console.log(error);
@@ -55,7 +55,9 @@ router.get('/:id', asyncHandler(async (req, res, next) => {
   const id = req.params.id;
   const bookInstances = await Book.findAll();
   if (id <= bookInstances.length) {
-    res.render('update-book');
+    const booksJSON = bookInstances.map(book => book.toJSON());
+    const matchId = booksJSON.find(book => book.id == id);
+    res.render('update-book', {book: matchId});
   } else {
     const error = new Error();
     error.status = 404;
