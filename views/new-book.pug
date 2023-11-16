@@ -7,8 +7,10 @@ block content
         if error
             h2.error Oooops!
             ul.error
-                li Title is required
-                li Author is required
+                if titleErr 
+                    li Title is required
+                if authorErr
+                    li Author is required
         p
             label(for='title') Title
             input#title(name='title' type='text')

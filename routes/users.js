@@ -1,4 +1,4 @@
-// //YOU CANNOT DELETE THIS FILE AS IT SUPPORTS THE INDEX FILE
+//FILE CAN PROBABLY BE DELETED
 
 // const express = require('express');
 // const router = express.Router();

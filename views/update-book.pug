@@ -7,7 +7,9 @@ block content
         if error
             h2.error Oooops!
             ul.error
-                li Title is required
+                if titleErr 
+                    li Title is required
+                if authorErr
                 li Author is required
         p
             label(for='title') Title

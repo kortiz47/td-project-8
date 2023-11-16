@@ -40,7 +40,9 @@ router.post('/new', asyncHandler(async (req, res) => {
   } catch (error) {
     if (error.name === 'SequelizeValidationError') {
       const errorMsgs = error.errors.map(error => error.message);
-      res.render('new-book', {error: errorMsgs});
+      const titleError = errorMsgs.includes("The 'title' input cannot be blank. Please add a title.");
+      const authorError = errorMsgs.includes("The 'author' input cannot be blank. Please add an author.");
+      res.render('new-book', {error: errorMsgs, titleErr: titleError, authorErr: authorError});
     } else {
       throw error;
     }
@@ -69,8 +71,8 @@ router.get('/:id', asyncHandler(async (req, res, next) => {
 /** Update Book Information  ( /books/:id ) POST*/
 router.post('/:id', asyncHandler(async(req,res)=>{
   let updatedBook;
+  const id = parseInt(req.params.id);
   try{
-    const id = parseInt(req.params.id);
     const findBookByPk = await Book.findByPk(id);
     if(findBookByPk){
       updatedBook = await findBookByPk.update(req.body);
@@ -81,7 +83,10 @@ router.post('/:id', asyncHandler(async(req,res)=>{
   }catch(error){
     if (error.name === 'SequelizeValidationError') {
       const errorMsgs = error.errors.map(error => error.message);
-      res.render('new-book', {error: errorMsgs});
+      console.log(errorMsgs);
+      // const titleError = errorMsgs.includes("The 'title' input cannot be blank. Please add a title.");
+      // const authorError = errorMsgs.includes("The 'author' input cannot be blank. Please add an author.");
+      // res.redirect('update-book', {error: errorMsgs, titleErr: titleError, authorErr: authorError});
     } else {
       throw error;
     }
