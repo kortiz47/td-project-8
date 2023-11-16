@@ -19,8 +19,9 @@ function asyncHandler(cb) {
 /** RENDER Home Route redirected to ( /books )*/
 router.get('/', asyncHandler(async (req, res) => {
   const bookInstances = await Book.findAll();
+  const pageBtns = Math.ceil((bookInstances.length)/10);
   const booksJSON = bookInstances.map(book => book.toJSON());
-  res.render('index', { books: booksJSON });
+  res.render('index', { books: booksJSON, pageBtns});
 })
 );
 

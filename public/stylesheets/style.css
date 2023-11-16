@@ -147,8 +147,7 @@ input[type=text] {
 }
 
 .pagination li {
-  display: flex;
-  justify-content: space-between;
+  display: inline;
   padding: 0 3px;
 }
 
