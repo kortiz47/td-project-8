@@ -3,6 +3,7 @@
 const {
   Model
 } = require('sequelize');
+const { Sequelize } = require('.');
 
 
 module.exports = (sequelize, DataTypes) => {
@@ -46,8 +47,12 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    genre: DataTypes.STRING,
-    year: DataTypes.INTEGER
+    genre: {
+      type: DataTypes.STRING
+    },
+    year: {
+      type: DataTypes.INTEGER
+    }
   }, {
     sequelize,
     modelName: 'Book',
