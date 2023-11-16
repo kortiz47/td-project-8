@@ -54,8 +54,9 @@ router.post('/new', asyncHandler(async (req, res) => {
 router.get('/:id', asyncHandler(async (req, res, next) => {
   const id = req.params.id;
   const bookInstances = await Book.findAll();
-  if (id <= bookInstances.length) {
-    const booksJSON = bookInstances.map(book => book.toJSON());
+  const booksJSON = bookInstances.map(book => book.toJSON());
+  const bookIDs = booksJSON.map(book => book.id);
+  if (bookIDs.includes(parseInt(id))) {
     const matchId = booksJSON.find(book => book.id == id);
     res.render('update-book', {book: matchId});
   } else {
