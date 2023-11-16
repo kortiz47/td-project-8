@@ -65,7 +65,7 @@ router.get('/:id', asyncHandler(async (req, res, next) => {
 }));
 
 
-/** Update Book Information  ( /books/:id ) */
+/** Update Book Information  ( /books/:id ) POST*/
 router.post('/:id', asyncHandler(async(req,res)=>{
   let updatedBook;
   try{
@@ -86,13 +86,14 @@ router.post('/:id', asyncHandler(async(req,res)=>{
   }
 }))
 
-//Deletes a book. Be careful, this can’t be undone. It can be helpful to create a new “test” book to test deleting
-// router.post('/:id/delete', asyncHandler(async(req, res) => {
-//   console.log(req.params.id);
-//   const bookById = await Book.findByPk(req.params.id);
-//   console.log('bookId: '+ bookById);
-// })
-// );
+/** Delete Book ( /books/:id/delete ) POST */
+router.post('/:id/delete', asyncHandler(async(req, res) => {
+  const id = req.params.id;
+  const bookById = await Book.findByPk(id);
+  await bookById.destroy();
+  res.redirect('/');
+})
+);
 
 //Exports
 module.exports = router;
