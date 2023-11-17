@@ -61,13 +61,12 @@ router.post('/new', asyncHandler(async (req, res) => {
 
 /** Rendered Book Detail Page ( /books/:id ) */
 router.get('/:id', asyncHandler(async (req, res, next) => {
-  const id = req.params.id;
+  const id = parseInt(req.params.id);
   const bookInstances = await Book.findAll();
-  const booksJSON = bookInstances.map(book => book.toJSON());
-  const bookIDs = booksJSON.map(book => book.id);
-  if (bookIDs.includes(parseInt(id))) {
-    const bookMatch = booksJSON.find(book => book.id == id);
-    res.render('update-book', { book: bookMatch });
+  const bookIdsArray = bookInstances.map(book => book.id);
+  if (bookIdsArray.includes(id)) {
+    const book = bookInstances.find(book => book.id == id);
+    res.render('update-book', { book });
   } else {
     const error = new Error();
     error.status = 404;
@@ -94,9 +93,7 @@ router.post('/:id', asyncHandler(async(req,res)=>{
       updatedBook = await Book.build(req.body);
       updatedBook.id = req.params.id;
       const errorMsgs = error.errors.map(error => error.message);
-      const titleError = errorMsgs.includes("The 'title' input cannot be blank. Please add a title.");
-      const authorError = errorMsgs.includes("The 'author' input cannot be blank. Please add an author.");
-      res.render(`update-book-error`, {book: updatedBook, error: errorMsgs, titleErr: titleError, authorErr: authorError});
+      res.render('update-book', {book: updatedBook, errors: errorMsgs});
     } else {
       throw error;
     }
