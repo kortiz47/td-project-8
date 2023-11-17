@@ -20,7 +20,7 @@ function asyncHandler(cb) {
 /** RENDER Home Route redirected to ( /books )*/
 router.get('/', asyncHandler(async (req, res) => {
   //Search
-  const search = req.query.search || '';
+  const search = req.query.search|| '';
 
   //Pagination
   const page = parseInt(req.query.page) || 1;
