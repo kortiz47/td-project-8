@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const Book = require("../models").Book;
+const { Op } = require("sequelize");
 
 
 //=============================TRY/CATCH HANDLER=============================
@@ -19,95 +20,30 @@ function asyncHandler(cb) {
 /** RENDER Home Route redirected to ( /books )*/
 router.get('/', asyncHandler(async (req, res) => {
   //Search
-  const search = req.query.search;
-  console.log(search);
+  const search = req.query.search || '';
+
   //Pagination
   const page = parseInt(req.query.page) || 1;
   const limit = 10;
   const offset = (page - 1) * limit;
 
-  const books = await Book.findAll({
-    limit,
+  const { count, rows } = await Book.findAndCountAll({
+    where: {
+      [Op.or]: [
+        { title: { [Op.like]: `%${search}%` } },
+        { author: { [Op.like]: `%${search}%` } },
+        { genre: { [Op.like]: `%${search}%` } },
+        { year: { [Op.like]: `%${search}%` } },
+      ]
+    },
     offset,
-    order: [['id', 'ASC']],
-    // where:{
-    //   [Op.or]:[
-    //     title={
-    //       [Op.iLike]:[`%${search}%`]
-    //     },
-    //     author={
-    //       [Op.iLike]:[`%${search}%`]
-    //     },
-    //     genre={
-    //       [Op.iLike]:[`%${search}%`]
-    //     },
-    //     year={
-    //       [Op.iLike]:[`%${search}%`]
-    //     }
-    //   ]
-    // }
-  });
+    limit
+  })
 
-  const totalBooks = await Book.count();
-  const totalPages = Math.ceil(totalBooks / limit)
-  res.render('index', { books, pageBtns: totalPages, currentPage: page });
+  const totalPages = Math.ceil(count / limit)
+  res.render('index', { books: rows, pageBtns: totalPages, currentPage: page });
 })
 );
-
-/** SEARCH FORM POST */
-
-// router.get('/search/:query', asyncHandler(async (req, res) => {
-//   const search = req.params.query;
-//   const allBooks = await Book.findAll();
-//   // const searchMatches = await Book.findAll({
-//   //   where: {
-//   //     [Op.or]: [
-//   //       {title},
-//   //       {author},
-//   //       {genre},
-//   //       {year}
-//   //     ]
-//   //   }
-//   // })
-//   res.send(allBooks);;
-// }))
-
-// router.post('/', asyncHandler(async(req, res) => {
-//   //Pagination During Search
-//   const page = parseInt(req.query.page) || 1;
-//   const limit = 10;
-//   const offset = (page - 1) * limit;
-//   const totalBooks = await Book.count();
-//   const totalPages = Math.ceil(totalBooks / limit)
-
-
-
-//   const search = req.body.searchTemr;
-//   console.log(search);
-//   const books = Book.findAll({
-//     where: {
-//       limit,
-//       offset,
-//       order: [['id', 'ASC']],
-//       [Op.or]: [
-//         {
-//           title: { [Op.iLike]: `%${search}%` }
-//         },
-//         {
-//           author: { [Op.iLike]: `%${search}%` },
-//         },
-//         {
-//           genre: { [Op.iLike]: `%${search}%` },
-//         },
-//         {
-//           year: { [Op.iLike]: `%${search}%` },
-//         }
-//       ]
-//     },
-//   })
-//   res.render('index', { books, pageBtns: totalPages, currentPage: page });
-// }))
-
 
 /** RENDER New Book Form ( /books/new ) */
 router.get('/new', (req, res) => {
