@@ -1,6 +1,6 @@
-form(method='get')
+form(method='get' action='/books?search')
     label.book-search(for='search')
         span Search by:
-        input#search(placeholder='Search by Title, Author, Genre, or Year' type='search')
+        input#search(placeholder='Search by Title, Author, Genre, or Year' type='search' name='search')
         button(type='submit')
             img(src='/images/icon.svg' alt='Search Icon' width='30px')
