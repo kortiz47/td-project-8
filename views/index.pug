@@ -34,6 +34,8 @@ block content
         - var n = 1;
         ul.link-list 
             while n <= pageBtns
-                li 
-                    button(type='button' class)=n++
+                li
+                    a(href=`/books?page=${n}`)
+                        button(type='button' class='page-btn')=n++
+                        
             

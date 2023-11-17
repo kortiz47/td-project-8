@@ -1,10 +1,16 @@
-const booksPerPage = 10;
-const bookList = document.querySelector('.book-entries');
-const pageBtns = document.querySelector('.link-list');
+// //Default make first button active
+// const pageBtns = document.querySelector('.link-list');
+// const firstPgBtn = pageBtns.querySelector('button');
+// firstPgBtn.className = 'active';
 
-//SHOW PAGE FUNCTION
+// //
+// pageBtns.addEventListener('click', (e)=>{
+//     if(e.target.tagName === 'BUTTON'){
+//         const activeBtn = pageBtns.querySelector('.active');
+//         activeBtn.removeAttribute('class', 'active');
+//         const clickedBtn = e.target.closest('button');
+//         clickedBtn.className = 'active';
+//     }
+// })
 
-function showPage(bookEntries, page){
-    const startIndex = (page*booksPerPage) - booksPerPage;
-    const endIndex = (page*booksPerPage);
-}
+
