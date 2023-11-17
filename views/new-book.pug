@@ -4,13 +4,7 @@ block content
 
     h1 New Book
     form(method='post' action='/books/new')
-        if error
-            h2.error Oooops!
-            ul.error
-                if titleErr 
-                    li Title is required
-                if authorErr
-                    li Author is required
+        include validation-error
         p
             label(for='title') Title
             input#title(name='title' type='text')
