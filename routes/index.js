@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const Book = require("../models").Book;
 
+
 //=============================TRY/CATCH HANDLER=============================
 function asyncHandler(cb) {
   return async (req, res, next) => {
@@ -13,15 +14,22 @@ function asyncHandler(cb) {
     }
   }
 }
-
 //==================================ROUTES=====================================
 
 /** RENDER Home Route redirected to ( /books )*/
 router.get('/', asyncHandler(async (req, res) => {
-  const bookInstances = await Book.findAll();
-  const pageBtns = Math.ceil((bookInstances.length)/10);
-  const booksJSON = bookInstances.map(book => book.toJSON());
-  res.render('index', { books: booksJSON, pageBtns});
+  const books = await Book.findAll();
+
+  // //Pagination
+  // const pageBtns = Math.ceil((bookInstances.length)/10);
+  // const page = req.query.page;
+  // const limit = req.query.limit;
+  // const startIndex = (page - 1)* limit;
+  // const endIndex = page*limit;
+  // const booksPerPage = booksJSON.slice(startIndex, endIndex);
+  // //render
+  // , pageBtns
+  res.render('index', { books });
 })
 );
 
@@ -42,13 +50,8 @@ router.post('/new', asyncHandler(async (req, res) => {
   } catch (error) {
     if (error.name === 'SequelizeValidationError') {
       book = await Book.build(req.body);
-      const bookJSON = book.toJSON();
-      const errorMsgs = error.errors.map(error => error.message);
-      const titleError = errorMsgs.includes("The 'title' input cannot be blank. Please add a title.");
-      const authorError = errorMsgs.includes("The 'author' input cannot be blank. Please add an author.");
-      console.log(errorMsgs);
-      
-      res.render('new-book', {error: errorMsgs, noTitle: titleError, noAuthor: authorError, book: bookJSON});
+      const errorMsgs = error.errors.map(error => error.message);      
+      res.render('new-book', {errors: errorMsgs, book});
     } else {
       throw error;
     }
@@ -93,7 +96,7 @@ router.post('/:id', asyncHandler(async(req,res)=>{
       const errorMsgs = error.errors.map(error => error.message);
       const titleError = errorMsgs.includes("The 'title' input cannot be blank. Please add a title.");
       const authorError = errorMsgs.includes("The 'author' input cannot be blank. Please add an author.");
-      res.redirect(`/books/${id}`, {book: updatedBook, error: errorMsgs, titleErr: titleError, authorErr: authorError});
+      res.render(`update-book-error`, {book: updatedBook, error: errorMsgs, titleErr: titleError, authorErr: authorError});
     } else {
       throw error;
     }

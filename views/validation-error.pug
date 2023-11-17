@@ -1,7 +1,5 @@
-if error
+if errors
     h2.error Oooops!
     ul.error
-        if noTitle
-            li Title is required
-        if noAuthor
-            li Author is required
+        each error in errors 
+            li=error
