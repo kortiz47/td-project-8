@@ -18,7 +18,9 @@ function asyncHandler(cb) {
 
 /** RENDER Home Route redirected to ( /books )*/
 router.get('/', asyncHandler(async (req, res) => {
-
+  //Search
+  const search = req.query.search;
+  console.log(search);
   //Pagination
   const page = parseInt(req.query.page) || 1;
   const limit = 10;
@@ -27,7 +29,23 @@ router.get('/', asyncHandler(async (req, res) => {
   const books = await Book.findAll({
     limit,
     offset,
-    order: [['id', 'ASC']]
+    order: [['id', 'ASC']],
+    // where:{
+    //   [Op.or]:[
+    //     title={
+    //       [Op.iLike]:[`%${search}%`]
+    //     },
+    //     author={
+    //       [Op.iLike]:[`%${search}%`]
+    //     },
+    //     genre={
+    //       [Op.iLike]:[`%${search}%`]
+    //     },
+    //     year={
+    //       [Op.iLike]:[`%${search}%`]
+    //     }
+    //   ]
+    // }
   });
 
   const totalBooks = await Book.count();
@@ -38,14 +56,21 @@ router.get('/', asyncHandler(async (req, res) => {
 
 /** SEARCH FORM POST */
 
-router.post('/', asyncHandler((req,res)=>{
-  try{
-    const search = req.body;
-    res.send(search);
-  }catch(error){
-    throw error;
-  }
-}))
+// router.get('/search/:query', asyncHandler(async (req, res) => {
+//   const search = req.params.query;
+//   const allBooks = await Book.findAll();
+//   // const searchMatches = await Book.findAll({
+//   //   where: {
+//   //     [Op.or]: [
+//   //       {title},
+//   //       {author},
+//   //       {genre},
+//   //       {year}
+//   //     ]
+//   //   }
+//   // })
+//   res.send(allBooks);;
+// }))
 
 // router.post('/', asyncHandler(async(req, res) => {
 //   //Pagination During Search
