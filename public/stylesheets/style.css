@@ -160,7 +160,7 @@ span{
   padding: 3px;
 }
 
-.pagination li button {
+.pagination li a button {
   font-size: 1em;
   cursor: pointer;
 	outline: none;

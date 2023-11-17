@@ -18,6 +18,7 @@ function asyncHandler(cb) {
 
 /** RENDER Home Route redirected to ( /books )*/
 router.get('/', asyncHandler(async (req, res) => {
+
   //Pagination
   const page = parseInt(req.query.page) || 1;
   const limit = 10;
@@ -25,14 +26,62 @@ router.get('/', asyncHandler(async (req, res) => {
 
   const books = await Book.findAll({
     limit,
-    offset
+    offset,
+    order: [['id', 'ASC']]
   });
 
   const totalBooks = await Book.count();
-  const totalPages = Math.ceil(totalBooks/limit)
+  const totalPages = Math.ceil(totalBooks / limit)
   res.render('index', { books, pageBtns: totalPages, currentPage: page });
 })
 );
+
+/** SEARCH FORM POST */
+
+router.post('/', asyncHandler((req,res)=>{
+  try{
+    const search = req.body;
+    res.send(search);
+  }catch(error){
+    throw error;
+  }
+}))
+
+// router.post('/', asyncHandler(async(req, res) => {
+//   //Pagination During Search
+//   const page = parseInt(req.query.page) || 1;
+//   const limit = 10;
+//   const offset = (page - 1) * limit;
+//   const totalBooks = await Book.count();
+//   const totalPages = Math.ceil(totalBooks / limit)
+
+
+
+//   const search = req.body.searchTemr;
+//   console.log(search);
+//   const books = Book.findAll({
+//     where: {
+//       limit,
+//       offset,
+//       order: [['id', 'ASC']],
+//       [Op.or]: [
+//         {
+//           title: { [Op.iLike]: `%${search}%` }
+//         },
+//         {
+//           author: { [Op.iLike]: `%${search}%` },
+//         },
+//         {
+//           genre: { [Op.iLike]: `%${search}%` },
+//         },
+//         {
+//           year: { [Op.iLike]: `%${search}%` },
+//         }
+//       ]
+//     },
+//   })
+//   res.render('index', { books, pageBtns: totalPages, currentPage: page });
+// }))
 
 
 /** RENDER New Book Form ( /books/new ) */
