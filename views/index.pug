@@ -2,13 +2,7 @@ extends layout.pug
 
 block content
     h1 MY LIBRARY
-    
-    form(method='post' action='/books')
-        label.book-search(for='search')
-            span Search by:
-            input#search(placeholder='Search by Title, Author, Genre, or Year' type='search')
-            button(type='submit')
-                img(src='/images/icon.svg' alt='Search Icon' width='30px')
+    include search-form
     p
         a.button(href='/books/new') Create New Book
     table
