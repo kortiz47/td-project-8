@@ -101,6 +101,12 @@ input[type=text] {
 
 /* Styles for Search Bar */
 
+span{
+  font: 25px "Garamond", serif;
+  font-weight: bold;
+  color:#01b189;
+}
+
 .book-search {
   display: flex;
 }
@@ -113,13 +119,16 @@ input[type=text] {
   font-size: 14px;
 }
 
-.book-search span{
+.book-search select{
   border: 1px solid #019875;
   padding: 10px;
   color: #000;
   border-radius: 5px;
   background-color: #E7E7E7;
+  font: 18px "Garamond", serif;
+  font-weight: bold;
 }
+
 .book-search input::placeholder {
   color: #929b9e;
 }

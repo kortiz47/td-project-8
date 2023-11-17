@@ -2,9 +2,14 @@ extends layout.pug
 
 block content
     h1 Books
+    span Search by:
     div.search
         label.book-search(for='search')
-            span Search By:  
+            select#search-type(name='book-identifier')
+                option(value='title') Title
+                option(value='author') Author
+                option(value='genre') Genre
+                option(value='year') Year  
             input#search(placeholder='Search by Title, Author, Genre, or Year' type='search')
             button(type='button')
                 img(src='/images/icon.svg' alt='Search Icon' width='30px')
